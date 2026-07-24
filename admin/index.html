@@ -14,7 +14,7 @@
     This is a placeholder for base href that will be replaced by the value of
     the `--base-href` argument provided to `flutter build`.
   -->
-  <base href="/">
+  <base href="/ytmaster-showcase/admin/">
 
   <meta charset="UTF-8">
   <meta content="IE=Edge" http-equiv="X-UA-Compatible">
@@ -31,8 +31,100 @@
 
   <title>YT Master Admin</title>
   <link rel="manifest" href="manifest.json">
+
+  <!-- Boot splash: shown instantly while the Flutter engine downloads
+       and starts, removed on the first rendered frame. Colors mirror
+       the panel's theme tokens so the hand-off is seamless. -->
+  <style>
+    :root {
+      --splash-bg: #F5F6FA;
+      --splash-fg: #1A1A2E;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --splash-bg: #0F1220;
+        --splash-fg: #FFFFFF;
+      }
+    }
+    html.splash-light {
+      --splash-bg: #F5F6FA;
+      --splash-fg: #1A1A2E;
+    }
+    html.splash-dark {
+      --splash-bg: #0F1220;
+      --splash-fg: #FFFFFF;
+    }
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      background: var(--splash-bg);
+    }
+    #boot-splash {
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      background: var(--splash-bg);
+      transition: opacity 0.4s ease;
+    }
+    #boot-splash.done {
+      opacity: 0;
+      pointer-events: none;
+    }
+    #boot-splash img {
+      width: 64px;
+      height: 64px;
+      border-radius: 16px;
+    }
+    #boot-splash .name {
+      font: 600 17px system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+      color: var(--splash-fg);
+      letter-spacing: 0.2px;
+    }
+    #boot-splash .ring {
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      border: 3px solid rgba(92, 107, 192, 0.25);
+      border-top-color: #5C6BC0;
+      animation: boot-spin 0.9s linear infinite;
+    }
+    @keyframes boot-spin {
+      to { transform: rotate(360deg); }
+    }
+  </style>
+  <script>
+    // Match the splash to the theme the panel persisted on its last
+    // run (shared_preferences stores it in localStorage) so dark-theme
+    // users don't get a white flash before the engine loads.
+    (function () {
+      var saved = (localStorage.getItem('flutter.app_theme_mode') || '')
+        .replace(/"/g, '');
+      if (saved === 'dark' || saved === 'light') {
+        document.documentElement.classList.add('splash-' + saved);
+      }
+    })();
+  </script>
 </head>
 <body>
+  <div id="boot-splash">
+    <img src="icons/Icon-192.png" alt="">
+    <div class="name">YT Master Admin</div>
+    <div class="ring"></div>
+  </div>
+  <script>
+    window.addEventListener('flutter-first-frame', function () {
+      var splash = document.getElementById('boot-splash');
+      if (!splash) return;
+      splash.classList.add('done');
+      setTimeout(function () { splash.remove(); }, 450);
+    });
+  </script>
   <!--
     You can customize the "flutter_bootstrap.js" script.
     This is useful to provide a custom configuration to the Flutter loader
